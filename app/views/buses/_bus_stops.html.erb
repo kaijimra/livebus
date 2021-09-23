@@ -1,0 +1,24 @@
+<% if stops.any? %>
+  <table class="table">
+    <tr>
+      <th class="text-center">バス停名</th>
+      <th class="text-center">到着時刻</th>
+      <th class="text-center">発車時刻</th>
+    </tr>
+    <% stops.each do |stop| %>
+      <tr>
+        <th ><%= link_to stop.name, edit_bus_plan_path(stop), class: "text-decoration-none" %></th>
+        <td class="text-center">
+          <% busplan = @bus.bus_plans.find_by(stop_id: stop.id) %>
+          <% if busplan %>
+            <%= busplan.stop.name %>
+          <% else %>
+            <%= 'time' %>
+          <% end %>
+        </td>
+        <td class="text-center">time</td>
+      </tr>
+    <% end %>
+  </table>
+  <%== pagy_bootstrap_nav(@pagy) %>
+<% end %>

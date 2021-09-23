@@ -1,5 +1,6 @@
 <% if logged_in? %>
   <div class="row">
+    <%= link_to '追加', new_stop_path, class: 'nav-link' %>
     <div class="col-sm-8">
       <%= render 'stops/stops', stops: @stops %>
     </div>

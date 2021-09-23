@@ -1,0 +1,8 @@
+<% if logged_in? %>
+  <div class="row">
+    <%= link_to '追加', new_bus_path, class: 'nav-link' %>
+    <div class="col-sm-8">
+      <%= render 'buses/buses', buses: @buses %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<% if logged_in? %>
+  <div class="row">
+    <%= @bus.name + '便詳細' %>
+    <%= link_to 'バス便名変更', edit_bus_path(@bus), class: 'nav-link' %>
+    <div class="col-sm-8">
+      <%= render 'buses/bus_stops', stops: @stops %>
+    </div>
+  </div>
+<% end %>

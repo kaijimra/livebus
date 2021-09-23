@@ -1,0 +1,21 @@
+<% if logged_in? %>
+  <div class="text-center">
+    <h1>バス停名変更</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+
+      <%= form_with(model: @stop) do |f| %>
+        <%= render 'layouts/error_messages', model: f.object %>
+
+        <div class="mb-3">
+          <%= f.label :name, 'バス停名' %>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+
+        <%= f.submit '変更', class: 'btn btn-primary w-100' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

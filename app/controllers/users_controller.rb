@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show]
 
   def index
-    @pagy, @users = pagy(User.order(id: :desc), items: 25)
+    @pagy, @users = pagy(User.order(id: :asc), items: 25)
   end
 
   def show
@@ -15,13 +15,12 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.admin = @user.name == "Administrator"
 
     if @user.save
-      flash[:success] = 'ユーザを登録しました。' + (@user.admin ? 'as 管理者' : '')
-      redirect_to @user
+      flash[:success] = '管理者を登録しました。'
+      redirect_to root_url
     else
-      flash.now[:danger] = 'ユーザの登録に失敗しました。'
+      flash.now[:danger] = '管理者の登録に失敗しました。'
       render :new
     end
   end

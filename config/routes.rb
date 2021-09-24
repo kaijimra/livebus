@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :stops
   resources :buses
-  resources :plans
+  resources :plans, only: [:edit, :update]
 
 
 end

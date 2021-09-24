@@ -31,10 +31,3 @@
 
 en:
   hello: "Hello world"
-
-activerecord:
-    errors:
-      messages:
-        invalid_date: invalid date
-        invalid_time: invalid time
-        invalid_datetime: invalid date and time

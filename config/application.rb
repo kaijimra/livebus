@@ -36,3 +36,12 @@ module Livebus
     config.generators.system_tests = nil
   end
 end
+
+module TimeFormatSandbox
+  class Application < Rails::Application
+    # ...
+
+    # デフォルトのロケールを日本（ja）に設定
+    config.i18n.default_locale = :ja
+  end
+end

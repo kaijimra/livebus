@@ -1,5 +1,9 @@
 module PlansHelper
   def format_time(time)
-    time ? time.to_time.strftime("%H:%M") : "00:00"
+    time ? (l time.to_time) : "00:00"
+  end
+
+  def f_HHMM?(time)
+    time =~ /\A([0-9]|[0-1][0-9]|[2][0-3]):[0-5][0-9]\z/
   end
 end

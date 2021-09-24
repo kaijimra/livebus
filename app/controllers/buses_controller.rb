@@ -10,7 +10,7 @@ class BusesController < ApplicationController
     @pagy, @stops= pagy(Stop.order(id: :asc))
     time_prev = "00:00"
     @stops.each do |s|
-      plan = @bus.plans.find_or_create_by(stop_id: s)
+      plan = @bus.plans.find_or_create_by(stop_id: s.id)
       if time_prev > format_time(plan.arrv_time)
         flash.now[:danger] = '注意：時刻が昇順ではありません'
         break

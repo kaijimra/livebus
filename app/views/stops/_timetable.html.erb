@@ -8,9 +8,9 @@
       <th class="text-center"><%= "%02d" % h %></th>
       <% busmin = [] %>
       <% Bus.order(id: :asc).each do |bus| %>
-        <% bustime = bus.plans.find_by(stop_id: stop.id).dept_time %>
+        <% bustime = bus.plans.find_or_create_by(stop_id: stop.id).dept_time %>
         <% if bustime && bustime.to_time.strftime("%H") == "%02d" % h %>
-          <% busmin.push(bustime.to_time.strftime("%M")) %>
+          <% busmin.push(bustime.to_time.strftime("%M")+"("+bus.name+"便)") %>
         <% end %>
       <% end %>
       <% busmin.sort!.each do |m| %>

@@ -2,7 +2,7 @@ class StopsController < ApplicationController
   before_action :require_user_logged_in
 
   def index
-      @pagy, @stops = pagy(Stop.order(id: :asc))
+    @pagy, @stops = pagy(Stop.order(id: :asc))
   end
 
   def new
@@ -10,9 +10,8 @@ class StopsController < ApplicationController
   end
 
   def show
-      @pagy, @stops= pagy(Stop.order(id: :asc))
+    @stop= Stop.find(params[:id])
   end
-
 
   def create
     @stop = Stop.new(stop_params)

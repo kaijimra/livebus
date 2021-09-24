@@ -8,6 +8,15 @@ class BusesController < ApplicationController
   def show
     @bus = Bus.find(params[:id])
     @pagy, @stops= pagy(Stop.order(id: :asc))
+    time_prev = "00:00"
+    @stops.each do |s|
+      plan = @bus.plans.find_or_create_by(stop_id: s)
+      if time_prev > format_time(plan.arrv_time)
+        flash.now[:danger] = '注意：時刻が昇順ではありません'
+        break
+      end
+      time_prev = format_time(plan.dept_time)
+    end
   end
 
   def new

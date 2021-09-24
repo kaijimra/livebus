@@ -1,17 +1,45 @@
 <% if stops.any? %>
+  現在時刻は <%= @simtime %> です。
   <table class="table">
     <tr>
       <th class="text-center">バス停名</th>
-      <th class="text-center">到着時刻</th>
-      <th class="text-center">発車時刻</th>
+      <th class="text-center">バス便名</th>
     </tr>
+
+    <% pdt = [] %>
     <% stops.each do |stop| %>
       <tr>
+        <th ><%= link_to stop.name, stop_path(stop.id), class: "text-decoration-none" %></th>
+        <% cb = 0 %>
+
         <% Bus.all.each do |bus| %>
-        <% plan = bus.plans.find_or_create_by(stop_id: stop.id) %>
-        <th ><%= link_to stop.name, edit_plan_path(plan.id), class: "text-decoration-none" %></th>
-        <td class="text-center"><%= format_time(plan.arrv_time) %></td>
-        <td class="text-center"><%= format_time(plan.dept_time) %></td>
+          <% plan = bus.plans.find_or_create_by(stop_id: stop.id) %>
+
+          <%= pdt.size %>
+          <%= cb %>
+          <% if pdt.size <= cb %>
+
+            <% if @simtime < format_time(plan.arrv_time) %>
+              <td ><%= bus.name %>初便到着待ち</td>
+            <% elsif @simtime < format_time(plan.dept_time) %>
+              <td ><%= bus.name %>初便停車中</td>
+            <% end %>
+            <% pdt.push(format_time(plan.dept_time)) %>
+
+          <% else %>
+            <% if !pdt[cb].nil? && @simtime >= pdt[cb] %>
+
+              <% if @simtime < format_time(plan.arrv_time) %>
+                <td ><%= bus.name %>便到着待ち</td>
+              <% elsif @simtime < format_time(plan.dept_time) %>
+                <td ><%= bus.name %>便停車中</td>
+              <% end %>
+
+            <% end %>
+            <% pdt[cb] = format_time(plan.dept_time) %>
+
+          <% end %>
+          <% cb += 1 %>
         <% end %>
       </tr>
     <% end %>

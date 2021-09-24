@@ -3,11 +3,11 @@
     <th class="text-center">時</th>
     <th class="text-center">分</th>
   </tr>
-  <% (0..24).each do |h| %>
+  <% (0..23).each do |h| %>
     <tr>
       <th class="text-center"><%= "%02d" % h %></th>
       <% busmin = [] %>
-      <% Bus.order(id: :asc).each do |bus| %>
+      <% Bus.all.each do |bus| %>
         <% bustime = bus.plans.find_or_create_by(stop_id: stop.id).dept_time %>
         <% if bustime && bustime.to_time.strftime("%H") == "%02d" % h %>
           <% busmin.push(bustime.to_time.strftime("%M")+"("+bus.name+"便)") %>

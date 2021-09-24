@@ -13,16 +13,16 @@ class PlansController < ApplicationController
     p_dept_time = params[:plan][:dept_time]
 
     if !(f_HHMM?(p_arrv_time) && f_HHMM?(p_dept_time))
-      flash[:danger] = '正しい時刻を入力してください。'
+      flash.now[:danger] = '正しい時刻を入力してください。'
       render_edit
     elsif p_arrv_time.to_time > p_dept_time.to_time
-      flash[:danger] = '到着時刻より後に発車時刻にしてください。'
+      flash.now[:danger] = '到着時刻は発車時刻より前にしてください。'
       render_edit
     elsif @plan.update(plan_params)
-      flash[:success] = '到着・発車時刻を登録しました。'
+      flash.now[:success] = '到着・発車時刻を登録しました。'
       redirect_to bus_path(@plan.bus_id)
     else
-      flash[:danger] = '到着・発車時刻の登録に失敗しました。'
+      flash.now[:danger] = '到着・発車時刻の登録に失敗しました。'
       render_edit
     end
   end
@@ -36,6 +36,7 @@ class PlansController < ApplicationController
   def render_edit
     @plan.arrv_time = format_time(@plan.arrv_time)
     @plan.dept_time = format_time(@plan.dept_time)
-    redirect_to request.referer
+    render :edit
+#    redirect_to request.referer
   end
 end

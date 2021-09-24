@@ -13,5 +13,7 @@ Rails.application.routes.draw do
   resources :buses
   resources :plans, only: [:edit, :update]
 
+  get 'plans/:id', to: 'plans#edit'
+
 
 end

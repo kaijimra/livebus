@@ -7,16 +7,10 @@
     </tr>
     <% stops.each do |stop| %>
       <tr>
-        <th ><%= link_to stop.name, edit_bus_plan_path(stop), class: "text-decoration-none" %></th>
-        <td class="text-center">
-          <% busplan = @bus.bus_plans.find_by(stop_id: stop.id) %>
-          <% if busplan %>
-            <%= busplan.stop.name %>
-          <% else %>
-            <%= 'time' %>
-          <% end %>
-        </td>
-        <td class="text-center">time</td>
+        <% plan = @bus.plans.find_or_create_by(stop_id: stop.id) %>
+        <th ><%= link_to stop.name, edit_plan_path(plan.id), class: "text-decoration-none" %></th>
+        <td class="text-center"><%= format_time(plan.arrv_time) %></td>
+        <td class="text-center"><%= format_time(plan.dept_time) %></td>
       </tr>
     <% end %>
   </table>

@@ -18,7 +18,7 @@ class StopsController < ApplicationController
     @stop = Stop.new(stop_params)
     if @stop.save
       flash[:success] = 'バス停を追加しました。'
-      redirect_to root_url
+      redirect_to stops_url
     else
       @pagy, @stops = pagy(Stop.order(id: :asc))
       flash.now[:danger] = 'バス停の追加に失敗しました。'
@@ -40,6 +40,13 @@ class StopsController < ApplicationController
       flash.now[:danger] = 'バス停名は更新されませんでした'
       render :edit
     end
+  end
+
+  def destroy
+    @stop = Stop.find(params[:id])
+    @stop.destroy
+    flash[:success] = 'バス停を削除しました。'
+    redirect_to stops_url
   end
 
   private

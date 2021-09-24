@@ -18,7 +18,7 @@ class BusesController < ApplicationController
     @bus = Bus.new(bus_params)
     if @bus.save
       flash[:success] = 'バス便を追加しました。'
-      redirect_to @bus
+      redirect_to buses_url
     else
       @pagy, @buses = pagy(Bus.order(id: :desc))
       flash.now[:danger] = 'バス便の追加に失敗しました。'
@@ -40,6 +40,13 @@ class BusesController < ApplicationController
       flash.now[:danger] = 'バス便名は更新されませんでした'
       render :edit
     end
+  end
+
+  def destroy
+    @bus = Bus.find(params[:id])
+    @bus.destroy
+    flash[:success] = 'バス便を削除しました。'
+    redirect_to buses_url
   end
 
   private

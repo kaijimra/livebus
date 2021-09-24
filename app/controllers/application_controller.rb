@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
       redirect_to login_url
     end
   end
+
+  def format_time(time)
+    time.to_time.strftime("%H:%M") if time
+  end
 end

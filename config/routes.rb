@@ -6,12 +6,12 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
-  get 'signup', to: 'users#new'
+#  get 'signup', to: 'users#new'
   resources :users, only: [:index, :show, :create]
 
   resources :stops
   resources :buses
-  resources :bus_plans
+  resources :plans
 
 
 end

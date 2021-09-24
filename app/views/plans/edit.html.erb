@@ -1,0 +1,22 @@
+<% if logged_in? %>
+  <div class="text-center">
+    <h1><%= @plan.bus.name %>便 <%= @plan.stop.name %>バス停 到着・出発時刻変更</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+
+      <%= form_with(model: @plan) do |f| %>
+        <%= render 'layouts/error_messages', model: f.object %>
+
+        <div class="mb-3">
+          <%= f.label :arrv_time, '到着時刻' %>
+          <%= f.text_field :arrv_time, class: 'form-control' %>
+          <%= f.label :dept_time, '出発時刻' %>
+          <%= f.text_field :dept_time, class: 'form-control' %>
+        </div>
+        <%= f.submit '変更', class: 'btn btn-primary w-100' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

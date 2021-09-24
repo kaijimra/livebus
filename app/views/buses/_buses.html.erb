@@ -1,14 +1,13 @@
 <% if buses.any? %>
-  <ul class="list-unstyled mt-2">
+  <table class="table">
+    <tr>
+      <th class="text-center">バス便名</th>
+    </tr>
     <% buses.each do |bus| %>
-      <li class="d-flex">
-        <div>
-          <div>
-            <%= link_to bus.name, bus_path(bus), class: "text-decoration-none" %>
-          </div>
-        </div>
-      </li>
+      <tr>
+        <th ><%= link_to bus.name, bus_path(bus), class: "text-decoration-none" %></th>
+      </tr>
     <% end %>
-  </ul>
+  </table>
   <%== pagy_bootstrap_nav(@pagy) %>
 <% end %>

@@ -8,6 +8,6 @@ module PlansHelper
   end
 
   def sim_time
-    @simtime = format_time(Time.at(Time.now.to_i*200))
+    @simtime = format_time(Time.at(Time.now.to_i*1+9*60*60))
   end
 end

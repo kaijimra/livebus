@@ -1,19 +1,32 @@
 <% if logged_in? %>
-  <div class="text-center">
-    <h1><%= @plan.bus.name %>便 <%= @plan.stop.name %>バス停 到着・出発時刻変更</h1>
+  <div class="row">
+    <div class="col-sm-6">
+      <h2 class="text-start text-sm-center">到着・発車時刻変更</h2>
+    </div>
+    <div class="col-sm-6">
+      <h3 class="text-start text-sm-center">現在時刻 <%= @simtime %></h3>
+    </div>
+  </div>
+
+  <div class="col-sm-8">
+    <h3 class="text-start text-sm-center">
+      <%= @plan.bus.name %>便
+      <%= @plan.stop.name %>バス停
+    </h3>
   </div>
 
   <div class="row">
-    <div class="col-sm-6 offset-sm-3">
+    <div class="col-sm-2 offset-sm-5">
 
       <%= form_with(model: @plan) do |f| %>
         <%= render 'layouts/error_messages', model: f.object %>
 
         <div class="mb-3">
           <%= f.label :arrv_time, '到着時刻' %>
-          <%= f.text_field :arrv_time, class: 'form-control' %>
+          <%= f.text_field :arrv_time, class: 'form-control text-center' %>
           <%= f.label :dept_time, '出発時刻' %>
-          <%= f.text_field :dept_time, class: 'form-control' %>
+          <%= f.text_field :dept_time, class: 'form-control text-center' %>
+          <%= hidden_field_tag :page, params[:page] %>
         </div>
         <%= f.submit '変更', class: 'btn btn-primary w-100' %>
       <% end %>

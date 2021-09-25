@@ -1,9 +1,38 @@
 <% if logged_in? %>
   <div class="row">
-    <%= @bus.name + '便詳細' %>
-    <%= link_to 'バス便名変更', edit_bus_path(@bus), class: 'nav-link' %>
-    <div class="col-sm-8">
-      <%= render 'buses/bus_stops', stops: @stops %>
+    <div class="col-sm-6">
+      <h2 class="text-start text-sm-center">運行スケジュール詳細</h2>
+    </div>
+    <div class="col-sm-6">
+      <h3 class="text-start text-sm-center">現在時刻 <%= @simtime %></h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="mx-auto col-md-8">
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="text-start text-md-end"><%= @bus.name + '便' %></h4>
+        </div>
+        <div class="col-md-9">
+          <%= link_to 'バス便名変更', edit_bus_path(@bus), class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <% if Bus.exists?(@bus.id - 1) %>
+            <%= link_to '◀前便', bus_path(@bus.id - 1, page: @pagy.page), class: 'btn btn-secondary w-100 btn-sm' %>
+          <% end %>
+        </div>
+        <div class="offset-6 col-3">
+          <% if Bus.exists?(@bus.id + 1) %>
+            <%= link_to '後便▶', bus_path(@bus.id + 1, page: @pagy.page), class: 'btn btn-secondary w-100 btn-sm' %>
+          <% end %>
+        </div>
+      </div>
+      <div class="mx-auto col-sm-8">
+        <%= render 'buses/bus_stops', stops: @stops %>
+      </div>
     </div>
   </div>
 <% end %>

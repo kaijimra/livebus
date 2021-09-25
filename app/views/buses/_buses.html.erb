@@ -5,7 +5,7 @@
     </tr>
     <% buses.each do |bus| %>
       <tr>
-        <th ><%= link_to bus.name, bus_path(bus), class: "text-decoration-none" %></th>
+        <th class="text-center"><%= link_to bus.name, bus_path(bus), class: "text-decoration-none" %></th>
       </tr>
     <% end %>
   </table>

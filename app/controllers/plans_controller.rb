@@ -1,5 +1,6 @@
 class PlansController < ApplicationController
   before_action :require_user_logged_in
+  before_action :sim_time
 
   def edit
     @plan = Plan.find(params[:id])
@@ -19,8 +20,8 @@ class PlansController < ApplicationController
       flash.now[:danger] = '到着時刻は発車時刻より前にしてください。'
       render_edit
     elsif @plan.update(plan_params)
-      flash.now[:success] = '到着・発車時刻を登録しました。'
-      redirect_to bus_path(@plan.bus_id)
+      flash[:success] = '到着・発車時刻を登録しました。'
+      redirect_to bus_path(@plan.bus_id, page: params[:page])
     else
       flash.now[:danger] = '到着・発車時刻の登録に失敗しました。'
       render_edit

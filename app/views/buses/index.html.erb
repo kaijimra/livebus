@@ -1,13 +1,27 @@
 <% if logged_in? %>
   <div class="row">
-    バス一覧
-    <%= link_to '追加', new_bus_path, class: 'nav-link' %>
-    <div class="col-sm-8">
-      <%= render 'buses/buses', buses: @buses %>
+    <div class="col-sm-6">
+      <h2 class="text-start text-sm-center">運行バス一覧</h2>
     </div>
-    <% lastbus = Bus.order(updated_at: :asc).last %>
-    <% if lastbus %>
-      <%= link_to "末尾のバス便を削除", bus_path(lastbus), method: :delete, data: { confirm: "削除しますか？" }, class: 'btn btn-danger btn-sm' %>
-    <% end %>
+    <div class="col-sm-6">
+      <h3 class="text-start text-sm-center">現在時刻 <%= @simtime %></h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="mx-auto col-md-8">
+      <% lastbus = Bus.order(updated_at: :asc).last %>
+      <%= link_to 'バス便を末尾に追加', new_bus_path, class: 'btn btn-primary btn-sm' %>
+      <% if lastbus %>
+        <%= link_to "バス便を末尾から削除", bus_path(lastbus), method: :delete, data: { confirm: "削除しますか？" }, class: 'btn btn-danger btn-sm' %>
+      <% end %>
+      <div class="mx-auto col-sm-8">
+        <%= render 'buses/buses', buses: @buses %>
+      </div>
+      <%= link_to 'バス便を末尾に追加', new_bus_path, class: 'btn btn-primary btn-sm' %>
+      <% if lastbus %>
+        <%= link_to "バス便を末尾から削除", bus_path(lastbus), method: :delete, data: { confirm: "削除しますか？" }, class: 'btn btn-danger btn-sm' %>
+      <% end %>
+    </div>
   </div>
 <% end %>

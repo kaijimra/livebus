@@ -1,13 +1,28 @@
 <% if logged_in? %>
   <div class="row">
-    バス停一覧
-    <%= link_to '追加', new_stop_path, class: 'nav-link' %>
-    <div class="col-sm-8">
-      <%= render 'stops/stops', stops: @stops %>
+    <div class="col-sm-6">
+      <h2 class="text-start text-sm-center">バス停一覧</h2>
     </div>
-    <% laststop = Stop.order(updated_at: :asc).last %>
-    <% if laststop %>
-      <%= link_to "末尾のバス停 を削除", stop_path(laststop), method: :delete, data: { confirm: "削除しますか？" }, class: 'btn btn-danger btn-sm' %>
-    <% end %>
+    <div class="col-sm-6">
+      <h3 class="text-start text-sm-center">現在時刻 <%= @simtime %></h3>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="mx-auto col-md-8">
+      <% laststop = Stop.order(updated_at: :asc).last %>
+      <%= link_to 'バス停を末尾に追加', new_stop_path, class: 'btn btn-primary btn-sm' %>
+      <% if laststop %>
+        <%= link_to "末尾のバス停 を削除", stop_path(laststop), method: :delete, data: { confirm: "削除しますか？" }, class: 'btn btn-danger btn-sm' %>
+      <% end %>
+      <div class="mx-auto col-sm-8">
+        <%= render 'stops/stops', stops: @stops %>
+      </div>
+      <%= link_to 'バスを末尾に追加', new_stop_path, class: 'btn btn-primary btn-sm' %>
+      <% if laststop %>
+        <%= link_to "末尾のバス停 を削除", stop_path(laststop), method: :delete, data: { confirm: "削除しますか？" }, class: 'btn btn-danger btn-sm' %>
+      <% end %>
+    </div>
   </div>
 <% end %>

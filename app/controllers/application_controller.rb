@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper  #追記
   include Pagy::Backend
+  include PlansHelper
 
   private
 
@@ -10,5 +11,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  include PlansHelper
 end

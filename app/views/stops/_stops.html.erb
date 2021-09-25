@@ -5,7 +5,7 @@
     </tr>
     <% stops.each do |stop| %>
       <tr>
-        <th ><%= link_to stop.name, stop_path(stop), class: "text-decoration-none" %></th>
+        <th class="text-center"><%= link_to stop.name, stop_path(stop), class: "text-decoration-none" %></th>
       </tr>
     <% end %>
   </table>

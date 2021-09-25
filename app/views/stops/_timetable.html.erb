@@ -3,19 +3,29 @@
     <th class="text-center">時</th>
     <th class="text-center">分</th>
   </tr>
+  <% f_1stline = false %>
   <% (0..23).each do |h| %>
     <tr>
-      <th class="text-center"><%= "%02d" % h %></th>
       <% busmin = [] %>
       <% Bus.all.each do |bus| %>
         <% bustime = bus.plans.find_or_create_by(stop_id: stop.id).dept_time %>
         <% if bustime && bustime.to_time.strftime("%H") == "%02d" % h %>
-          <% busmin.push(bustime.to_time.strftime("%M")+"("+bus.name+"便)") %>
+          <% busmin.push(bustime.to_time.strftime("%M")+"<br>"+bus.name+"便") %>
         <% end %>
       <% end %>
-      <% busmin.sort!.each do |m| %>
-        <td class="text-center"><%= m %></td>
+
+      <% if f_1stline || !busmin.empty? %>
+        <% f_1stline = true %>
+        <th class="text-center"><%= "%02d" % h %></th>
+        <td class="">
+        <div class="row" %>
+          <% busmin.sort!.each do |m| %>
+            <div class="col-2 text-center">
+              <%= m.html_safe %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
-    </tr>
-  <% end %>
-</table>
+    </td>
+  </tr>
+<% end %>

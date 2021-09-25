@@ -1,13 +1,15 @@
 class BusesController < ApplicationController
   before_action :require_user_logged_in
+  before_action :sim_time
 
   def index
-      @pagy, @buses = pagy(Bus.order(id: :asc))
+      @pagy, @buses = pagy(Bus.order(id: :asc), items: 10)
   end
 
   def show
     @bus = Bus.find(params[:id])
-    @pagy, @stops= pagy(Stop.order(id: :asc))
+    @pagy, @stops= pagy(Stop.order(id: :asc), items: 10)
+    @simtime = sim_time
     time_prev = "00:00"
     @stops.each do |s|
       plan = @bus.plans.find_or_create_by(stop_id: s.id)

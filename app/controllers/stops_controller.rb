@@ -1,8 +1,9 @@
 class StopsController < ApplicationController
   before_action :require_user_logged_in
+  before_action :sim_time
 
   def index
-    @pagy, @stops = pagy(Stop.order(id: :asc))
+    @pagy, @stops = pagy(Stop.order(id: :asc), items: 10)
   end
 
   def new
@@ -19,7 +20,7 @@ class StopsController < ApplicationController
       flash[:success] = 'バス停を追加しました。'
       redirect_to stops_url
     else
-      @pagy, @stops = pagy(Stop.order(id: :asc))
+      @pagy, @stops = pagy(Stop.order(id: :asc), items: 10)
       flash.now[:danger] = 'バス停の追加に失敗しました。'
       render 'toppages/index'
     end

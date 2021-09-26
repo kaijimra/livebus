@@ -22,7 +22,7 @@ class StopsController < ApplicationController
     else
       @pagy, @stops = pagy(Stop.order(id: :asc), items: 10)
       flash.now[:danger] = 'バス停の追加に失敗しました。'
-      render 'toppages/index'
+      render :new
     end
   end
 

@@ -1,49 +1,49 @@
 <% if stops.any? %>
   <table class="table">
-    <tr>
-      <th class="text-center">バス停名</th>
-      <th class="text-center">バス便名</th>
-    </tr>
-
-    <% pdt = [] %>
-    <% f_1stline = false %>
-    <% stops.each do |stop| %>
+    <thead>
       <tr>
-        <th class="text-center">
-          <%= link_to stop.name, stop_path(stop.id), class: "text-decoration-none" %>
-        </th>
-        <% cb = 0 %>
-
-        <td class="text-center"><% Bus.all.each do |bus| %>
-          <% plan = bus.plans.find_or_create_by(stop_id: stop.id) %>
-
-          <% if !f_1stline && pdt.size <= cb %>
-
-            <% if @simtime < format_time(plan.arrv_time) %>
-              <% f_1stline = true %>
-              <%= bus.name %>便到着待ち<br/>
-            <% elsif @simtime < format_time(plan.dept_time) %>
-              <%= bus.name %>便停車中<br/>
-            <% end %>
-            <% pdt.push(format_time(plan.dept_time)) %>
-
-          <% else %>
-
-            <% if !pdt[cb].nil? && @simtime >= pdt[cb] %>
-              <% if @simtime < format_time(plan.arrv_time) %>
-                <%= bus.name %>便到着待ち<br/>
-              <% elsif @simtime < format_time(plan.dept_time) %>
-                <%= bus.name %>便停車中<br/>
-              <% end %>
-            <% end %>
-            <% pdt[cb] = format_time(plan.dept_time) %>
-
-          <% end %>
-
-          <% cb += 1 %>
-        <% end %></td>
-
+        <th class="text-center">バス停名</th>
+        <th class="text-center">バス便名</th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% pdt = [] %>
+      <% f_1stline = false %>
+      <% stops.each do |stop| %>
+        <tr>
+          <th class="text-center">
+            <%= link_to stop.name, stop_path(stop.id), class: "text-decoration-none" %>
+          </th>
+          <% cb = 0 %>
+          <td class="text-center">
+            <% Bus.all.each do |bus| %>
+              <% plan = bus.plans.find_or_create_by(stop_id: stop.id) %>
+
+              <% if !f_1stline && pdt.size <= cb %>
+                <% if @simtime < format_time(plan.arrv_time) %>
+                  <% f_1stline = true %>
+                  <%= bus.name %>便到着待ち<br/>
+                <% elsif @simtime < format_time(plan.dept_time) %>
+                  <%= bus.name %>便停車中<br/>
+                <% end %>
+                <% pdt.push(format_time(plan.dept_time)) %>
+
+              <% else %>
+                <% if !pdt[cb].nil? && @simtime >= pdt[cb] %>
+                  <% if @simtime < format_time(plan.arrv_time) %>
+                    <%= bus.name %>便到着待ち<br/>
+                  <% elsif @simtime < format_time(plan.dept_time) %>
+                    <%= bus.name %>便停車中<br/>
+                  <% end %>
+                <% end %>
+                <% pdt[cb] = format_time(plan.dept_time) %>
+
+              <% end %>
+              <% cb += 1 %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
 <% end %>

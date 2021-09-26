@@ -33,7 +33,7 @@ class BusesController < ApplicationController
     else
       @pagy, @buses = pagy(Bus.order(id: :desc))
       flash.now[:danger] = 'バス便の追加に失敗しました。'
-      render 'toppages/index'
+      render :new
     end
   end
 

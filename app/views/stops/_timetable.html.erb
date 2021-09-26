@@ -1,11 +1,13 @@
 <table class="table">
-  <tr>
-    <th class="text-center">時</th>
-    <th class="text-center">分</th>
-  </tr>
-  <% f_1stline = false %>
-  <% (0..23).each do |h| %>
+  <thead>
     <tr>
+      <th class="text-center">時</th>
+      <th class="text-center">分</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% f_1stline = false %>
+    <% (0..23).each do |h| %>
       <% busmin = [] %>
       <% Bus.all.each do |bus| %>
         <% bustime = bus.plans.find_or_create_by(stop_id: stop.id).dept_time %>
@@ -16,16 +18,21 @@
 
       <% if f_1stline || !busmin.empty? %>
         <% f_1stline = true %>
-        <th class="text-center"><%= "%02d" % h %></th>
-        <td class="">
-        <div class="row" %>
-          <% busmin.sort!.each do |m| %>
-            <div class="col-2 text-center">
-              <%= m.html_safe %>
+        <tr>
+          <th class="text-center">
+            <%= "%02d" % h %>
+          </th>
+          <td>
+            <div class="row" >
+              <% busmin.sort!.each do |m| %>
+                <div class="col-2 text-center">
+                  <%= m.html_safe %>
+                </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
+          </td>
+        </tr>
       <% end %>
-    </td>
-  </tr>
-<% end %>
+    <% end %>
+  </tbody>
+</table>

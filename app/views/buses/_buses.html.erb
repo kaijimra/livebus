@@ -1,13 +1,17 @@
 <% if buses.any? %>
   <table class="table">
-    <tr>
-      <th class="text-center">バス便名</th>
-    </tr>
-    <% buses.each do |bus| %>
+    <thead>
       <tr>
-        <th class="text-center"><%= link_to bus.name, bus_path(bus), class: "text-decoration-none" %></th>
+        <th class="text-center">バス便名</th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% buses.each do |bus| %>
+        <tr>
+          <th class="text-center"><%= link_to bus.name, bus_path(bus), class: "text-decoration-none" %></th>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
   <%== pagy_bootstrap_nav(@pagy) %>
 <% end %>
